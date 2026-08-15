@@ -650,13 +650,39 @@ with tab5:
         btn_enviar = st.form_submit_button("🚀 Enviar Pedido a Caja")
 
 if btn_enviar:
-            try:
-                response = supabase.table("pedidos").insert({
-                    "estado": "Pendiente",
-                    "total": float(cant_mozo) * 10.0
-                }).execute()
-                
-                st.success(f"✅ ¡Pedido enviado a caja para la {mesa_mozo}!")
-                st.rerun()
-            except Exception as e:
-                st.error(f"❌ Error al guardar en Supabase: {e}")
+    try:
+        # Precios reales de los productos
+        precios_mozo = {
+            "Pollo Canga": 25.00,
+            "Churrasco Brasilero": 25.00,
+            "Picanha": 40.00,
+            "Tomahawk": 70.00,
+            "Cerveza Pilsen": 12.00,
+            "Refresco Copoazú": 20.00
+        }
+
+        # Obtener precio del producto seleccionado
+        monto_unitario = precios_mozo[plato_mozo]
+
+        # Calcular total según cantidad
+        total_pedido = float(cant_mozo) * monto_unitario
+
+        # Registrar pedido en Supabase
+        response = supabase.table("pedidos").insert({
+            "producto": plato_mozo,
+            "monto": monto_unitario,
+            "metodo": "Pedido de Mozo",
+            "estado": "Pendiente",
+            "total": total_pedido
+        }).execute()
+
+        st.success(
+            f"✅ Pedido enviado a caja | "
+            f"{mesa_mozo} | {plato_mozo} x {cant_mozo} | "
+            f"S/ {total_pedido:.2f}"
+        )
+
+        st.rerun()
+
+    except Exception as e:
+        st.error(f"❌ Error al guardar en Supabase: {e}")
