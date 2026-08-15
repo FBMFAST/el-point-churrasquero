@@ -23,6 +23,20 @@ st.set_page_config(
     page_icon="🥩",
     layout="centered"
 )  # <--- ¡FALTA ESTE PARÉNTESIS AQUÍ!
+# ==========================================
+# ONESIGNAL - NOTIFICACIONES WEB
+# ==========================================
+st.html("""
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+        appId: "5c9603dc-665a-4b73-961a-d2df894900c4",
+    });
+});
+</script>
+""", unsafe_allow_javascript=True)
 
 
 # Estilos CSS personalizados (Fondo oscuro churrasquero)
