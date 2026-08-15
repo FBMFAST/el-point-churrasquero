@@ -513,7 +513,7 @@ with tab4:
                 vuelto = paga_con - monto
                 st.info(f"💰 **Vuelto a entregar:** S/ {vuelto:.2f}")
 
-btn_registrar = st.form_submit_button("✅ Registrar Venta")
+btn_registrar = st.button("💾 Registrar Venta")
 
 if btn_registrar:
     st.session_state.ventas.append({
