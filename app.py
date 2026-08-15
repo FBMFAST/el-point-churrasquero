@@ -4,6 +4,13 @@ import io
 import os
 from PIL import Image
 from supabase import create_client, Client
+# ==========================================
+# FUNCIÓN PARA CARGAR IMÁGENES
+# ==========================================
+CARPETA_APP = os.path.dirname(os.path.abspath(__file__))
+
+def ruta_imagen(nombre):
+    return os.path.join(CARPETA_APP, nombre)
 
 # Inicializar conexión con Supabase forzando el esquema public
 url = st.secrets["SUPABASE_URL"]
@@ -20,28 +27,78 @@ st.set_page_config(
 
 # Estilos CSS personalizados (Fondo oscuro churrasquero)
 st.markdown("""
-    <style>
-    .stApp {
-        background-color: #121212;
-        color: #F5F5F5;
-    }
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-    }
-    .stTabs [data-baseweb="tab"] {
-        background-color: #1E1E1E;
-        border-radius: 6px;
-        color: white;
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-    .stTabs [aria-selected="true"] {
-        background-color: #FF4B4B !important;
-        color: white !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
+<style>
 
+.stApp {
+    background-color: #121212;
+    color: #F5F5F5;
+}
+
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px;
+}
+
+.stTabs [data-baseweb="tab"] {
+    background-color: #1E1E1E;
+    border-radius: 6px;
+    color: white;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.stTabs [aria-selected="true"] {
+    background-color: #FF4B4B !important;
+    color: white !important;
+}
+
+
+/* ==========================================
+   DISEÑO RESPONSIVE PARA CELULARES
+   ========================================== */
+
+@media (max-width: 768px) {
+
+    /* Las columnas pasan a una sola columna */
+    [data-testid="stHorizontalBlock"] {
+        flex-wrap: wrap !important;
+        gap: 0.5rem !important;
+    }
+
+    [data-testid="column"] {
+        width: 100% !important;
+        flex: 1 1 100% !important;
+        min-width: 100% !important;
+    }
+
+    /* Imágenes ocupan un ancho cómodo */
+    [data-testid="stImage"] img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    /* Títulos un poco más pequeños */
+    h1 {
+        font-size: 1.8rem !important;
+    }
+
+    h2 {
+        font-size: 1.5rem !important;
+    }
+
+    h3 {
+        font-size: 1.3rem !important;
+    }
+
+    /* Las pestañas se adaptan mejor */
+    .stTabs [data-baseweb="tab"] {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+        font-size: 0.85rem !important;
+    }
+}
+
+</style>
+""", unsafe_allow_html=True)
 # --- CONEXIÓN SUPABASE ---
 try:
     url = st.secrets["SUPABASE_URL"]
@@ -393,66 +450,107 @@ with tab1:
 with tab2:
     # ==========================================
     # SECCIÓN BEBIDAS (CON FOTOS INDIVIDUALES)
-    # ==========================================
+       # ==========================================
     st.markdown("### 🥤 Nuestras Bebidas")
     st.caption("Haz clic en cada categoría para ver opciones.")
 
     # --- CERVEZAS ---
-    with st.expander("🍺 **Cervezas**"):        
-        for nombre, precio, img in [
+    with st.expander("🍺 **Cervezas**"):
+
+        cervezas = [
             ("Cerveza Pilsen", "S/ 12.00", "cerveza_pilsen.jpg"),
-            ("Cerveza Cusqueña", "S/ 10.00", "cerveza_cusquena.jpg"),
+            ("Cerveza Cusquena", "S/ 10.00", "cerveza_cusquena.jpg"),
             ("Cerveza Skol", "S/ 6.00", "cerveza_skol.jpg")
-        ]:
+        ]
+
+        for nombre, precio, img in cervezas:
+
             col_img, col_txt = st.columns([1, 2])
+
             with col_img:
-               try:
-                   ruta_imagen = os.path.join(r"D:\el-point-churrasquero", img)
-                   st.image(ruta_imagen, use_container_width=True)
-               except:
-                   st.warning(f"No se encontró: {img}")
+
+                archivo = ruta_imagen(img)
+
+                if os.path.exists(archivo):
+                    st.image(
+                        archivo,
+                        use_container_width=True
+                    )
+                else:
+                    st.warning(f"No se encontró la imagen: {img}")
+
             with col_txt:
-                st.markdown(f"#### **{nombre}** — `{precio}`")
+                st.markdown(f"#### **{nombre}**")
+                st.markdown(f"### {precio}")
+
             st.markdown("---")
 
     # --- GASEOSAS ---
     with st.expander("🥤 **Gaseosas**"):
-        for nombre, precio, img in [
+
+        gaseosas = [
             ("Gaseosa Inka Kola (1 Litro)", "S/ 7.00", "gaseosa_inkakola_1l.jpg"),
             ("Gaseosa Coca Cola (1 Litro)", "S/ 7.00", "gaseosa_cocacola_1l.jpg"),
             ("Gaseosa Inka Kola (1.5 Litros)", "S/ 9.00", "gaseosa_inkakola_1p5l.jpg"),
             ("Gaseosa Coca Cola (1.5 Litros)", "S/ 9.00", "gaseosa_cocacola_1p5l.jpg"),
             ("Gaseosa (2 Litros)", "S/ 13.00", "gaseosa_2l.jpg")
-        ]:
+        ]
+
+        for nombre, precio, img in gaseosas:
+
             col_img, col_txt = st.columns([1, 2])
+
             with col_img:
-                try:
-                    ruta_imagen = os.path.join(r"D:\el-point-churrasquero", img)
-                    st.image(img, use_container_width=True)
-                except:
-                    st.warning(f"No se encontró: {img}")
+
+                archivo = ruta_imagen(img)
+
+                if os.path.exists(archivo):
+                    st.image(
+                        archivo,
+                        use_container_width=True
+                    )
+                else:
+                    st.warning(f"No se encontró la imagen: {img}")
+
             with col_txt:
-                st.markdown(f"#### **{nombre}** — `{precio}`")
+                st.markdown(f"#### **{nombre}**")
+                st.markdown(f"### {precio}")
+
             st.markdown("---")
 
     # --- REFRESCOS NATURALES ---
     with st.expander("🍹 **Refrescos Naturales**"):
-        for nombre, precio, img in [
+
+        refrescos = [
             ("Refresco de Copoazú (1 Jarra)", "S/ 20.00", "refresco_copoazu_1jarra.jpg"),
             ("Refresco de Copoazú (1/2 Jarra)", "S/ 10.00", "refresco_copoazu_mediajarra.jpg"),
             ("Refresco Chicha/Carambola/Maracuyá (1 Jarra)", "S/ 15.00", "refresco_varios_1jarra.jpg"),
             ("Refresco Chicha/Carambola/Maracuyá (1/2 Jarra)", "S/ 8.00", "refresco_varios_mediajarra.jpg")
-        ]:
+        ]
+
+        for nombre, precio, img in refrescos:
+
             col_img, col_txt = st.columns([1, 2])
+
             with col_img:
-                try:
-                    ruta_imagen = os.path.join(r"D:\el-point-churrasquero", img)
-                    st.image(img, use_container_width=True)
-                except:
-                    st.warning(f"No se encontró: {img}")
+
+                archivo = ruta_imagen(img)
+
+                if os.path.exists(archivo):
+                    st.image(
+                        archivo,
+                        use_container_width=True
+                    )
+                else:
+                    st.warning(f"No se encontró la imagen: {img}")
+
             with col_txt:
-                    st.markdown(f"#### **{nombre}** — `{precio}`")
-                    st.markdown("---")
+                st.markdown(f"#### **{nombre}**")
+                st.markdown(f"### {precio}")
+
+            st.markdown("---")
+
+
 # --- TAB 3: GUARNICIONES ---
 with tab3:
     st.subheader("🍟 Guarniciones y Acompañamientos")
