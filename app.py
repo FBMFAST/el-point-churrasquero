@@ -515,25 +515,23 @@ with tab4:
 
 btn_registrar = st.form_submit_button("✅ Registrar Venta")
 
-if btn_registrar:
-    st.session_state.ventas.append({
-        "producto": plato,
-        "monto": monto,
-        "metodo": metodo
-    })
-    try:
-        supabase.table("pedidos").insert({
-            "producto": plato,
-            "monto": monto,
-            "metodo": metodo,
-            "total": monto,
-            "estado": "Pendiente"
-        }).execute()
-        st.success("¡Venta registrada con éxito en la caja!")
-    except Exception as e:
-        st.error(f"Error al guardar en Supabase: {e}")
-
-    st.markdown("---")
+        if btn_registrar:
+            st.session_state.ventas.append({
+                "producto": plato,
+                "monto": monto,
+                "metodo": metodo
+            })
+            try:
+                supabase.table("pedidos").insert({
+                    "producto": plato,
+                    "monto": monto,
+                    "metodo": metodo,
+                    "total": monto,
+                    "estado": "Pendiente"
+                }).execute()
+                st.success("¡Venta registrada con éxito en la caja!")
+            except Exception as e:
+                st.error(f"Error al guardar en Supabase: {e}")    st.markdown("---")
     
    # --- RESUMEN DE VENTAS DESDE SUPABASE PARA EL DUEÑO ---
 st.subheader("📊 Reporte de Caja en Vivo")
