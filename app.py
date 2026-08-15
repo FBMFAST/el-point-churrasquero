@@ -533,7 +533,7 @@ with tab4:
             except Exception as e:
                 st.error(f"Error al guardar en Supabase: {e}")
 
-            st.success("¡Venta registrada con éxito en la caja!")
+                st.success("¡Venta registrada con éxito en la caja!")
 
     st.markdown("---")
     
