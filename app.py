@@ -18,7 +18,7 @@ key = st.secrets["SUPABASE_KEY"]
 supabase = create_client(url, key)
 
 # Configuración de página con tema apetitoso
-st.set_page_config(
+st.set_page_config( 
     page_title="El Point Churrasquero",
     page_icon="🥩",
     layout="centered"
