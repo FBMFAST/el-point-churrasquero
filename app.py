@@ -515,8 +515,8 @@ with tab4:
 
 btn_registrar = st.form_submit_button("✅ Registrar Venta")
 
-        if btn_registrar:
-            st.session_state.ventas.append({
+if btn_registrar:
+    st.session_state.ventas.append({
                 "producto": plato,
                 "monto": monto,
                 "metodo": metodo
