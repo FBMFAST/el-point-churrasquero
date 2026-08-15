@@ -531,8 +531,7 @@ btn_registrar = st.form_submit_button("✅ Registrar Venta")
                 }).execute()
                 st.success("¡Venta registrada con éxito en la caja!")
             except Exception as e:
-                st.error(f"Error al guardar en Supabase: {e}")    st.markdown("---")
-    
+                st.error(f"Error al guardar en Supabase: {e}")    
    # --- RESUMEN DE VENTAS DESDE SUPABASE PARA EL DUEÑO ---
 st.subheader("📊 Reporte de Caja en Vivo")
 
