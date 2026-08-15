@@ -5,6 +5,11 @@ import os
 from PIL import Image
 from supabase import create_client, Client
 
+# Inicializar conexión con Supabase desde los Secrets
+url = st.secrets["SUPABASE_URL"]
+key = st.secrets["SUPABASE_KEY"]
+supabase = create_client(url, key)
+
 # Configuración de página con tema apetitoso
 st.set_page_config(
     page_title="El Point Churrasquero",
