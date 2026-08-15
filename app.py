@@ -525,7 +525,7 @@ st.subheader("📊 Reporte de Caja en Vivo")
 
 try:
     # Traemos los datos directamente de la tabla pedidos en Supabase
-    response = supabase.table("pedidos").select("*").execute()
+    response = supabase.schema("public").table("pedidos").select("*").execute()
     ventas_supabase = response.data
 
     if ventas_supabase:
