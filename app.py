@@ -5,7 +5,7 @@ import os
 from PIL import Image
 from supabase import create_client, Client
 
-# Inicializar conexión con Supabase desde los Secrets
+# Inicializar conexión con Supabase forzando el esquema public
 url = st.secrets["SUPABASE_URL"]
 key = st.secrets["SUPABASE_KEY"]
 supabase = create_client(url, key)
@@ -515,13 +515,25 @@ with tab4:
 
             btn_registrar = st.form_submit_button("✅ Registrar Venta")
 
-            if btn_registrar:
-                st.session_state.ventas.append({
+          if btn_registrar:
+            st.session_state.ventas.append({
+                "producto": plato,
+                "monto": monto,
+                "metodo": metodo
+            })
+            
+            try:
+                supabase.table("pedidos").insert({
                     "producto": plato,
                     "monto": monto,
-                    "metodo": metodo
-                })
-                st.success("¡Venta registrada con éxito en la caja!")
+                    "metodo": metodo,
+                    "total": monto,
+                    "estado": "Pendiente"
+                }).execute()
+            except Exception as e:
+                st.error(f"Error al guardar en Supabase: {e}")
+
+            st.success("¡Venta registrada con éxito en la caja!")
 
     st.markdown("---")
     
