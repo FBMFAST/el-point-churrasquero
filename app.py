@@ -513,9 +513,9 @@ with tab4:
                 vuelto = paga_con - monto
                 st.info(f"💰 **Vuelto a entregar:** S/ {vuelto:.2f}")
 
-            btn_registrar = st.form_submit_button("✅ Registrar Venta")
+btn_registrar = st.form_submit_button("✅ Registrar Venta")
 
-          if btn_registrar:
+        if btn_registrar:
             st.session_state.ventas.append({
                 "producto": plato,
                 "monto": monto,
@@ -530,10 +530,11 @@ with tab4:
                     "total": monto,
                     "estado": "Pendiente"
                 }).execute()
+                
+                st.success("¡Venta registrada con éxito en la caja!")
+                
             except Exception as e:
                 st.error(f"Error al guardar en Supabase: {e}")
-
-                st.success("¡Venta registrada con éxito en la caja!")
 
     st.markdown("---")
     
