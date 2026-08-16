@@ -48,45 +48,51 @@ st.markdown("""
     color: #F5F5F5;
 }
 
-/* CONTROLES OSCUROS */
+/* ===== SELECTORES OSCUROS ===== */
+
 div[data-testid="stSelectbox"] [data-baseweb="select"] {
     background-color: #1E1E1E !important;
     color: #FFFFFF !important;
+    border-color: #555555 !important;
 }
 
-/* MENÚ DE OPCIONES */
+div[data-testid="stSelectbox"] [data-baseweb="select"] * {
+    color: #FFFFFF !important;
+}
+
+/* ===== MENÚ DESPLEGABLE ===== */
+
+[data-baseweb="popover"],
+[data-baseweb="popover"] > div,
+[data-baseweb="popover"] > div > div,
+[data-baseweb="menu"],
+[data-baseweb="menu"] > ul,
+ul[role="listbox"],
 div[role="listbox"] {
     background-color: #1E1E1E !important;
+    background-image: none !important;
+    opacity: 1 !important;
 }
 
+[data-baseweb="menu"] li,
+ul[role="listbox"] li,
 div[role="option"] {
     background-color: #1E1E1E !important;
+    background-image: none !important;
+    color: #FFFFFF !important;
+    opacity: 1 !important;
+}
+
+[data-baseweb="menu"] li *,
+ul[role="listbox"] li *,
+div[role="option"] * {
     color: #FFFFFF !important;
 }
 
+[data-baseweb="menu"] li:hover,
+ul[role="listbox"] li:hover,
 div[role="option"]:hover {
     background-color: #333333 !important;
-    color: #FFFFFF !important;
-}
-
-/* FONDO DEL MENÚ DESPLEGABLE DE STREAMLIT */
-
-div[data-baseweb="popover"] {
-    background-color: #1E1E1E !important;
-}
-
-div[data-baseweb="menu"] {
-    background-color: #1E1E1E !important;
-}
-
-div[data-baseweb="menu"] li {
-    background-color: #1E1E1E !important;
-    color: #FFFFFF !important;
-}
-
-div[data-baseweb="menu"] li:hover {
-    background-color: #333333 !important;
-    color: #FFFFFF !important;
 }
 
 .stTabs [data-baseweb="tab-list"] {
