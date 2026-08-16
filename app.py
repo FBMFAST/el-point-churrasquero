@@ -115,8 +115,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 # --- CONEXIÓN SUPABASE ---
 try:
-    url = st.secrets["SUPABASE_URL"]
-    key = st.secrets["SUPABASE_KEY"]
+    url = os.getenv("SUPABASE_URL") or st.secrets["SUPABASE_URL"]
+    key = os.getenv("SUPABASE_KEY") or st.secrets["SUPABASE_KEY"]
     supabase: Client = create_client(url, key)
 except Exception as e:
     st.error(f"Error de conexión con Supabase: {e}")
