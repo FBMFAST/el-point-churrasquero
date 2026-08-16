@@ -68,6 +68,27 @@ div[role="option"]:hover {
     background-color: #333333 !important;
     color: #FFFFFF !important;
 }
+
+/* FONDO DEL MENÚ DESPLEGABLE DE STREAMLIT */
+
+div[data-baseweb="popover"] {
+    background-color: #1E1E1E !important;
+}
+
+div[data-baseweb="menu"] {
+    background-color: #1E1E1E !important;
+}
+
+div[data-baseweb="menu"] li {
+    background-color: #1E1E1E !important;
+    color: #FFFFFF !important;
+}
+
+div[data-baseweb="menu"] li:hover {
+    background-color: #333333 !important;
+    color: #FFFFFF !important;
+}
+
 .stTabs [data-baseweb="tab-list"] {
     gap: 8px;
 }
