@@ -7,6 +7,12 @@ server {
         add_header Cache-Control "no-cache";
     }
 
+    location = /OneSignalSDKWorker.js {
+        alias /app/static/OneSignalSDKWorker.js;
+        default_type application/javascript;
+        add_header Cache-Control "no-cache";
+    }
+
     location / {
         proxy_pass http://127.0.0.1:8501;
         proxy_http_version 1.1;
