@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import io
 import os
+import requests
 from PIL import Image
 from supabase import create_client, Client
 # ==========================================
@@ -16,6 +17,48 @@ def ruta_imagen(nombre):
 url = os.getenv("SUPABASE_URL") or st.secrets["SUPABASE_URL"]
 key = os.getenv("SUPABASE_KEY") or st.secrets["SUPABASE_KEY"]
 supabase = create_client(url, key)
+
+# ==========================================
+# ONESIGNAL - ENVÍO DE NOTIFICACIONES
+# ==========================================
+
+ONESIGNAL_APP_ID = "5c9603dc-665a-4b73-961a-d2df894900c4"
+
+def enviar_notificacion_onesignal(mesa, producto, cantidad, total):
+    api_key = os.getenv("ONESIGNAL_REST_API_KEY")
+
+    if not api_key:
+        raise Exception("No se encontró ONESIGNAL_REST_API_KEY")
+
+    url_onesignal = "https://api.onesignal.com/notifications"
+
+    headers = {
+        "Authorization": f"Key {api_key}",
+        "Content-Type": "application/json"
+    }
+
+    payload = {
+        "app_id": ONESIGNAL_APP_ID,
+        "included_segments": ["Total Subscriptions"],
+        "headings": {"en": "🔥 NUEVO PEDIDO - EL POINT"},
+        "contents": {
+            "en": f"{mesa} | {producto} x{cantidad} | S/ {total:.2f}"
+        }
+    }
+
+    respuesta = requests.post(
+        url_onesignal,
+        headers=headers,
+        json=payload,
+        timeout=10
+    )
+
+    if not respuesta.ok:
+        raise Exception(
+            f"Error OneSignal {respuesta.status_code}: {respuesta.text}"
+        )
+
+    return respuesta.json()
 
 # Configuración de página con tema apetitoso
 st.set_page_config( 
@@ -835,6 +878,14 @@ if btn_enviar:
             "estado": "Pendiente",
             "total": total_pedido
         }).execute()
+
+        # Enviar notificación del pedido a OneSignal
+        enviar_notificacion_onesignal(
+            mesa_mozo,
+            plato_mozo,
+            cant_mozo,
+            total_pedido
+        )
 
         st.success(
             f"✅ Pedido enviado a caja | "
