@@ -10,7 +10,8 @@ COPY . /app
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN chmod +x /app/start.sh
+RUN sed -i 's/\r$//' /app/start.sh /app/nginx.conf.template \
+    && chmod +x /app/start.sh
 
 EXPOSE 10000
 
