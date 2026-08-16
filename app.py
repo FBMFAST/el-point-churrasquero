@@ -110,48 +110,7 @@ st.markdown("""
         font-size: 0.85rem !important;
     }
 }
-/* CORRECCIÓN DE SELECTORES STREAMLIT */
-
-div[data-testid="stSelectbox"] div[data-baseweb="select"] {
-    background-color: #ffffff !important;
-}
-
-div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-}
-
-div[data-testid="stSelectbox"] div[data-baseweb="select"] input {
-    color: #000000 !important;
-}
-
-div[data-testid="stSelectbox"] div[data-baseweb="select"] span {
-    color: #000000 !important;
-}
-
-div[data-testid="stNumberInput"] input {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-}
-
-div[data-testid="stNumberInput"] button {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-}
-
-div[role="listbox"] {
-    background-color: #ffffff !important;
-}
-
-div[role="option"] {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-}
-
-div[role="option"]:hover {
-    background-color: #eeeeee !important;
-    color: #000000 !important;
-}</style>
+</style>
 """, unsafe_allow_html=True)
 # --- CONEXIÓN SUPABASE ---
 try:
