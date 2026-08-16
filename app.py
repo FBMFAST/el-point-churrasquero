@@ -54,6 +54,20 @@ div[data-testid="stSelectbox"] [data-baseweb="select"] {
     color: #FFFFFF !important;
 }
 
+/* MENÚ DE OPCIONES */
+div[role="listbox"] {
+    background-color: #1E1E1E !important;
+}
+
+div[role="option"] {
+    background-color: #1E1E1E !important;
+    color: #FFFFFF !important;
+}
+
+div[role="option"]:hover {
+    background-color: #333333 !important;
+    color: #FFFFFF !important;
+}
 .stTabs [data-baseweb="tab-list"] {
     gap: 8px;
 }
