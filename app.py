@@ -13,8 +13,8 @@ def ruta_imagen(nombre):
     return os.path.join(CARPETA_APP, nombre)
 
 # Inicializar conexión con Supabase forzando el esquema public
-url = st.secrets["SUPABASE_URL"]
-key = st.secrets["SUPABASE_KEY"]
+url = os.getenv("SUPABASE_URL") or st.secrets["SUPABASE_URL"]
+key = os.getenv("SUPABASE_KEY") or st.secrets["SUPABASE_KEY"]
 supabase = create_client(url, key)
 
 # Configuración de página con tema apetitoso
