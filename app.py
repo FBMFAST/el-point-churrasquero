@@ -110,7 +110,31 @@ st.markdown("""
         font-size: 0.85rem !important;
     }
 }
+/* Corrección de visibilidad de selectores y cantidades */
 
+.stSelectbox div[data-baseweb="select"] > div,
+.stNumberInput input {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+.stSelectbox div[data-baseweb="select"] span {
+    color: #000000 !important;
+}
+
+div[role="listbox"] {
+    background-color: #ffffff !important;
+}
+
+div[role="option"] {
+    color: #000000 !important;
+    background-color: #ffffff !important;
+}
+
+div[role="option"]:hover {
+    background-color: #eeeeee !important;
+    color: #000000 !important;
+}
 </style>
 """, unsafe_allow_html=True)
 # --- CONEXIÓN SUPABASE ---
