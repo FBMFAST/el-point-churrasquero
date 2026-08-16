@@ -176,6 +176,36 @@ div[role="option"]:hover {
         min-width: 100% !important;
     }
 
+        /* ===== ENCABEZADO CENTRADO SOLO EN CELULAR ===== */
+
+    /* Centrar el logo del encabezado */
+    [data-testid="stHorizontalBlock"]:first-of-type
+    [data-testid="column"]:first-child
+    [data-testid="stImage"] {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+
+    /* Centrar título y eslogan del encabezado */
+    [data-testid="stHorizontalBlock"]:first-of-type
+    [data-testid="column"]:nth-child(2) {
+        text-align: center !important;
+    }
+
+    [data-testid="stHorizontalBlock"]:first-of-type
+    [data-testid="column"]:nth-child(2) h1 {
+        text-align: center !important;
+        width: 100% !important;
+    }
+
+    [data-testid="stHorizontalBlock"]:first-of-type
+    [data-testid="column"]:nth-child(2) [data-testid="stCaptionContainer"] {
+        text-align: center !important;
+        width: 100% !important;
+    }
+
     /* Imágenes ocupan un ancho cómodo */
     [data-testid="stImage"] img {
         max-width: 100% !important;
