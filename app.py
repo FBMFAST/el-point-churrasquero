@@ -48,6 +48,12 @@ st.markdown("""
     color: #F5F5F5;
 }
 
+/* CONTROLES OSCUROS */
+div[data-testid="stSelectbox"] [data-baseweb="select"] {
+    background-color: #1E1E1E !important;
+    color: #FFFFFF !important;
+}
+
 .stTabs [data-baseweb="tab-list"] {
     gap: 8px;
 }
