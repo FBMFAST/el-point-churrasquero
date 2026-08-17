@@ -826,7 +826,7 @@ for venta in datos_supabase:
     if pd.notna(fecha_registro):
         fecha_peru = fecha_registro.tz_convert("America/Lima")
 
-        if fecha_peru.date() == hoy_peru:
+        if fecha_peru.date() == hoy_peru and venta.get("estado") == "Pendiente":
             ventas_hoy.append({
                 "FECHA": fecha_peru.strftime("%d/%m/%Y"),
                 "HORA": fecha_peru.strftime("%H:%M:%S"),
@@ -945,7 +945,7 @@ if st.session_state.confirmar_cierre:
                     if pd.notna(fecha_registro):
                         fecha_peru = fecha_registro.tz_convert("America/Lima")
 
-                        if fecha_peru.date() == hoy_peru:
+                    if fecha_peru.date() == hoy_peru:
                             ids_cerrar.append(pedido["id"])
 
                 for pedido_id in ids_cerrar:
