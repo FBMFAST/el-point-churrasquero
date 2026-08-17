@@ -824,8 +824,7 @@ if ventas_validas:
     if st.button("🗑️ Limpiar Caja del Día"):
         st.session_state.ventas = []
         st.rerun()
-else:
-    st.info("Aún no hay ventas registradas el día de hoy.")
+
     # --- TAB 5: MÓDULO DE MOZOS ---
 with tab5:
     st.header("👨‍🍳 Módulo de Atención - Mozos")
