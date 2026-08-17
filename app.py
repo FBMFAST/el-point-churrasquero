@@ -922,8 +922,47 @@ if st.session_state.confirmar_cierre:
 
     with col_si:
         if st.button("✅ Sí, cerrar caja"):
-            st.info("Cierre de caja pendiente de activar.")
+            try:
+                zona_peru = ZoneInfo("America/Lima")
+                hoy_peru = datetime.now(zona_peru).date()
 
+                respuesta_cierre = (
+                    supabase.table("pedidos")
+                    .select("id, creado_en, estado")
+                    .eq("estado", "Pendiente")
+                    .execute()
+                )
+
+                ids_cerrar = []
+
+                for pedido in respuesta_cierre.data:
+                    fecha_registro = pd.to_datetime(
+                        pedido.get("creado_en"),
+                        utc=True,
+                        errors="coerce"
+                    )
+
+                    if pd.notna(fecha_registro):
+                        fecha_peru = fecha_registro.tz_convert("America/Lima")
+
+                        if fecha_peru.date() == hoy_peru:
+                            ids_cerrar.append(pedido["id"])
+
+                for pedido_id in ids_cerrar:
+                    supabase.table("pedidos").update(
+                        {"estado": "Cerrado"}
+                    ).eq("id", pedido_id).execute()
+
+                st.session_state.confirmar_cierre = False
+                st.session_state["cierre_exitoso"] = (
+                    f"✅ Caja cerrada correctamente. "
+                    f"{len(ids_cerrar)} ventas quedaron guardadas en el historial."
+                )
+
+                st.rerun()
+
+            except Exception as e:
+                st.error(f"❌ Error al cerrar la caja: {e}")
     with col_no:
         if st.button("❌ Cancelar"):
             st.session_state.confirmar_cierre = False
