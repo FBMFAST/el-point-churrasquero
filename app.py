@@ -828,6 +828,9 @@ if ventas_validas:
     # --- TAB 5: MÓDULO DE MOZOS ---
 with tab5:
     st.header("👨‍🍳 Módulo de Atención - Mozos")
+    if "pedido_exitoso" in st.session_state:
+        st.success(st.session_state.pop("pedido_exitoso"))
+        
     st.info("Registra aquí los pedidos rápidos de mesa para que lleguen directamente al control de caja.")
 
     with st.form("form_mozo", clear_on_submit=True):
@@ -880,7 +883,7 @@ if btn_enviar:
             total_pedido
         )
 
-        st.success(
+        st.session_state["pedido_exitoso"] = (
             f"✅ Pedido enviado a caja | "
             f"{mesa_mozo} | {plato_mozo} x {cant_mozo} | "
             f"S/ {total_pedido:.2f}"
