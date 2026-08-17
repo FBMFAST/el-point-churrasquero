@@ -6,6 +6,7 @@ import requests
 import base64
 from PIL import Image
 from supabase import create_client, Client
+from zoneinfo import ZoneInfo
 # ==========================================
 # FUNCIÓN PARA CARGAR IMÁGENES
 # ==========================================
@@ -818,31 +819,51 @@ except Exception as e:
     st.error(f"Error al cargar los datos de caja: {e}")
 from datetime import datetime
 
-# Tabla con el detalle de ventas
-ventas_validas = [v for v in st.session_state.ventas if v and any(v.values() if isinstance(v, dict) else v)]
+# ==========================================
+# VENTAS DEL DÍA DESDE SUPABASE
+# ==========================================
 
-if ventas_validas:
-    df_ventas = pd.DataFrame(ventas_validas)
+zona_peru = ZoneInfo("America/Lima")
+hoy_peru = datetime.now(zona_peru).date()
 
-    # Si tiene 3 columnas originales, asignamos nombres
-    if len(df_ventas.columns) == 3:
-        df_ventas.columns = ["PRODUCTO", "MONTO (S/)", "MÉTODO DE PAGO"]
+response_ventas = supabase.table("pedidos").select("*").execute()
+datos_supabase = response_ventas.data
 
-    # Agregar FECHA y HORA actuales si no están registradas
-    fecha_hoy = datetime.now().strftime("%d/%m/%Y")
-    hora_hoy = datetime.now().strftime("%H:%M:%S")
+ventas_hoy = []
 
-    if "FECHA" not in df_ventas.columns:
-        df_ventas.insert(0, "FECHA", fecha_hoy)
-    if "HORA" not in df_ventas.columns:
-        df_ventas.insert(1, "HORA", hora_hoy)
+for venta in datos_supabase:
+    fecha_registro = pd.to_datetime(
+        venta.get("creado_en"),
+        utc=True,
+        errors="coerce"
+    )
 
-    # Agregar numeración N° al inicio
-    if "N°" not in df_ventas.columns:
-        df_ventas.insert(0, "N°", range(1, len(df_ventas) + 1))
+    if pd.notna(fecha_registro):
+        fecha_peru = fecha_registro.tz_convert("America/Lima")
 
-    # Mostramos la tabla limpia en la pantalla web
-    st.dataframe(df_ventas, use_container_width=True, hide_index=True)
+        if fecha_peru.date() == hoy_peru:
+            ventas_hoy.append({
+                "FECHA": fecha_peru.strftime("%d/%m/%Y"),
+                "HORA": fecha_peru.strftime("%H:%M:%S"),
+                "PRODUCTO": venta.get("producto", ""),
+                "MONTO (S/)": venta.get("total", venta.get("monto", 0)),
+                "MÉTODO DE PAGO": venta.get("metodo", "")
+            })
+
+if ventas_hoy:
+    df_ventas = pd.DataFrame(ventas_hoy)
+
+    df_ventas.insert(
+        0,
+        "N°",
+        range(1, len(df_ventas) + 1)
+    )
+
+    st.dataframe(
+        df_ventas,
+        use_container_width=True,
+        hide_index=True
+    )
 
     # Generar el archivo Excel profesional con bordes y centrado
     output = io.BytesIO()
