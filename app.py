@@ -3,6 +3,7 @@ import pandas as pd
 import io
 import os
 import requests
+import base64
 from PIL import Image
 from supabase import create_client, Client
 # ==========================================
@@ -208,13 +209,83 @@ except Exception as e:
 
 # --- ENCABEZADO ---
 try:
-    image = Image.open('logo_point.png')
-    col1, col2 = st.columns([1, 4])
-    with col1:
-        st.image(image, width=163)
-    with col2:
-        st.title("EL POINT CHURRASQUERO")
-        st.caption("Donde el buen sabor no se negocia, ¡se disfruta!")
+    image = Image.open(ruta_imagen("logo_point.png"))
+
+    # ===== ENCABEZADO PC =====
+    with st.container(key="header_pc"):
+        col1, col2 = st.columns([1, 4])
+
+        with col1:
+            st.image(image, width=163)
+
+        with col2:
+            st.title("EL POINT CHURRASQUERO")
+            st.caption("Donde el buen sabor no se negocia, ¡se disfruta!")
+
+    # ===== ENCABEZADO CELULAR =====
+    with open(ruta_imagen("logo_point.png"), "rb") as archivo:
+        logo_base64 = base64.b64encode(archivo.read()).decode()
+
+    st.markdown(
+        f"""
+        <div class="header-movil">
+            <img src="data:image/png;base64,{logo_base64}">
+            <h1>EL POINT CHURRASQUERO</h1>
+            <p>Donde el buen sabor no se negocia, ¡se disfruta!</p>
+        </div>
+
+        <style>
+        /* En PC ocultamos el encabezado móvil */
+        .header-movil {{
+            display: none;
+        }}
+
+        @media (max-width: 768px) {{
+
+            /* En celular ocultamos únicamente el encabezado de PC */
+            .st-key-header_pc {{
+                display: none !important;
+            }}
+
+            /* Encabezado exclusivo para celular */
+            .header-movil {{
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 100% !important;
+                text-align: center !important;
+                margin: 0 auto 20px auto !important;
+            }}
+
+            .header-movil img {{
+                width: 163px !important;
+                height: auto !important;
+                display: block !important;
+                margin: 0 auto 14px auto !important;
+            }}
+
+            .header-movil h1 {{
+                width: 100% !important;
+                text-align: center !important;
+                margin: 0 auto 8px auto !important;
+                font-size: 1.8rem !important;
+                line-height: 1.2 !important;
+            }}
+
+            .header-movil p {{
+                width: 100% !important;
+                text-align: center !important;
+                margin: 0 auto !important;
+                color: #bdbdbd !important;
+                font-size: 0.95rem !important;
+            }}
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
 except FileNotFoundError:
     st.title("EL POINT CHURRASQUERO")
     st.caption("Donde el sabor encuentra su punto")
@@ -830,7 +901,7 @@ with tab5:
     st.header("👨‍🍳 Módulo de Atención - Mozos")
     if "pedido_exitoso" in st.session_state:
         st.success(st.session_state.pop("pedido_exitoso"))
-        
+
     st.info("Registra aquí los pedidos rápidos de mesa para que lleguen directamente al control de caja.")
 
     with st.form("form_mozo", clear_on_submit=True):
