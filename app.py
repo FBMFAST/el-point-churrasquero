@@ -897,10 +897,34 @@ if ventas_hoy:
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
 
-    # Botón para limpiar caja
-    if st.button("🗑️ Limpiar Caja del Día"):
-        st.session_state.ventas = []
-        st.rerun()
+# ==========================================
+# CIERRE DE CAJA DEL DÍA - SOLO DUEÑO
+# ==========================================
+
+st.markdown("### 📊 Reporte de Caja en Vivo")
+
+if "confirmar_cierre" not in st.session_state:
+    st.session_state.confirmar_cierre = False
+
+if st.button("🔐 Cerrar Caja del Día (Solo Dueño)"):
+    st.session_state.confirmar_cierre = True
+
+if st.session_state.confirmar_cierre:
+    st.warning(
+        "⚠️ ¿Está seguro de cerrar la caja del día? "
+        "Las ventas quedarán guardadas en el historial."
+    )
+
+    col_si, col_no = st.columns(2)
+
+    with col_si:
+        if st.button("✅ Sí, cerrar caja"):
+            st.info("Cierre de caja pendiente de activar.")
+
+    with col_no:
+        if st.button("❌ Cancelar"):
+            st.session_state.confirmar_cierre = False
+            st.rerun()
 
     # --- TAB 5: MÓDULO DE MOZOS ---
 with tab5:
