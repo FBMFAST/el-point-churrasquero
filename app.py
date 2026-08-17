@@ -801,22 +801,7 @@ if btn_registrar:
         st.success("¡Venta registrada con éxito en la caja!")
     except Exception as e:
         st.error(f"Error al guardar en Supabase: {e}")
-   # --- RESUMEN DE VENTAS DESDE SUPABASE PARA EL DUEÑO ---
-st.subheader("📊 Reporte de Caja en Vivo")
 
-try:
-    # Traemos los datos directamente de la tabla pedidos en Supabase
-    response = supabase.table("pedidos").select("*").execute()
-    ventas_supabase = response.data
-
-    if ventas_supabase:
-        # Mostramos la tabla con los datos reales de la nube
-        st.dataframe(ventas_supabase)
-    else:
-        st.info("Aún no hay ventas registradas el día de hoy en la nube.")
-
-except Exception as e:
-    st.error(f"Error al cargar los datos de caja: {e}")
 from datetime import datetime
 
 # ==========================================
