@@ -836,6 +836,9 @@ for venta in datos_supabase:
             })
 
 if ventas_hoy:
+
+    st.markdown("### 📊 Reporte de Caja en Vivo")
+
     df_ventas = pd.DataFrame(ventas_hoy)
 
     df_ventas.insert(
@@ -901,7 +904,7 @@ if ventas_hoy:
 # CIERRE DE CAJA DEL DÍA - SOLO DUEÑO
 # ==========================================
 
-st.markdown("### 📊 Reporte de Caja en Vivo")
+
 
 if "confirmar_cierre" not in st.session_state:
     st.session_state.confirmar_cierre = False
