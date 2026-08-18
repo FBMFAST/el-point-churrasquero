@@ -26,7 +26,7 @@ supabase = create_client(url, key)
 
 ONESIGNAL_APP_ID = "5c9603dc-665a-4b73-961a-d2df894900c4"
 
-def enviar_notificacion_onesignal(mesa, producto, cantidad, total):
+def enviar_notificacion_onesignal(mozo, mesa, producto, cantidad, total):
     api_key = os.getenv("ONESIGNAL_REST_API_KEY")
 
     if not api_key:
@@ -42,10 +42,10 @@ def enviar_notificacion_onesignal(mesa, producto, cantidad, total):
     payload = {
         "app_id": ONESIGNAL_APP_ID,
         "included_segments": ["Total Subscriptions"],
-        "headings": {"en": "🔥 NUEVO PEDIDO - EL POINT"},
+        "headings": {"en": f"🔥 NUEVO PEDIDO - {mozo}"},
         "contents": {
-            "en": f"{mesa} | {producto} x{cantidad} | S/ {total:.2f}"
-        }
+        "en": f"{mesa} | {producto} x{cantidad} | S/ {total:.2f}"
+    }
     }
 
     respuesta = requests.post(
@@ -1022,6 +1022,7 @@ if btn_enviar:
 
         # Enviar notificación del pedido a OneSignal
         enviar_notificacion_onesignal(
+            mozo_mozo,
             mesa_mozo,
             plato_mozo,
             cant_mozo,
