@@ -1030,8 +1030,8 @@ if btn_enviar:
 
         st.session_state["pedido_exitoso"] = (
             f"✅ Pedido enviado a caja | "
-            f"{mesa_mozo} | {plato_mozo} x {cant_mozo} | "
-            f"S/ {total_pedido:.2f}"
+            f"Mozo: {mozo_mozo} | {mesa_mozo} | "
+            f"{plato_mozo} x {cant_mozo} | S/ {total_pedido:.2f}"
         )
 
         st.rerun()
