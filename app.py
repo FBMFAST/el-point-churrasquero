@@ -1015,6 +1015,8 @@ if btn_enviar:
         response = supabase.table("pedidos").insert({
             "producto": plato_mozo,
             "monto": monto_unitario,
+            "mesa": mesa_mozo,
+            "cantidad": cant_mozo,
             "metodo": f"Pedido de Mozo - {mozo_mozo}",
             "estado": "Pendiente",
             "total": total_pedido
