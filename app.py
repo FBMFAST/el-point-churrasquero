@@ -977,6 +977,8 @@ with tab5:
     st.info("Registra aquí los pedidos rápidos de mesa para que lleguen directamente al control de caja.")
 
     with st.form("form_mozo", clear_on_submit=True):
+        mozo_mozo = st.selectbox("👨‍🍳 Mozo:", ["Joaco", "Kali", "Ale"])
+
         col_mesa, col_cantidad = st.columns([2, 1])
         
         with col_mesa:
@@ -1013,7 +1015,7 @@ if btn_enviar:
         response = supabase.table("pedidos").insert({
             "producto": plato_mozo,
             "monto": monto_unitario,
-            "metodo": "Pedido de Mozo",
+            "metodo": f"Pedido de Mozo - {mozo_mozo}",
             "estado": "Pendiente",
             "total": total_pedido
         }).execute()
