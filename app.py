@@ -986,8 +986,46 @@ with tab5:
         with col_mesa:
             mesa_mozo = st.selectbox("Número de Mesa:", ["Mesa 1", "Mesa 2", "Mesa 3", "Mesa 4", "Mesa 5", "Para Llevar"])
             plato_mozo = st.selectbox("Plato / Bebida:", [
-                "Pollo Canga", "Churrasco Brasilero", "Picanha", 
-                "Tomahawk", "Cerveza Pilsen", "Refresco Copoazú"
+                "Pollo Canga (Solo)",
+                "Pollo Canga - Mixto 1 (c/ Calabresa)",
+                "Pollo Canga - Mixto 1 (c/ Toscana)",
+                "Pollo Canga - Mixto 2 (c/ Calabresa y Toscana)",
+                "Churrasco Brasilero (Solo)",
+                "Churrasco Brasilero - Mixto 1 (c/ Calabresa)",
+                "Churrasco Brasilero - Mixto 1 (c/ Toscana)",
+                "Churrasco Brasilero - Mixto 2 (c/ Calabresa y Toscana)",
+                "Cuadril (Solo)",
+                "Cuadril - Mixto 1 (c/ Calabresa)",
+                "Cuadril - Mixto 1 (c/ Toscana)",
+                "Cuadril - Mixto 2 (c/ Calabresa y Toscana)",
+                "Picanha (Sola)",
+                "Picanha - Mixto 1 (c/ Calabresa)",
+                "Picanha - Mixto 1 (c/ Toscana)",
+                "Picanha - Mixto 2 (c/ Calabresa y Toscana)",
+                "Cadera (Sola)",
+                "Cadera - Mixto 1 (c/ Calabresa)",
+                "Cadera - Mixto 1 (c/ Toscana)",
+                "Cadera - Mixto 2 (c/ Calabresa y Toscana)",
+                "Tomahawk (Solo)",
+                "Tomahawk - Mixto 1 (c/ Calabresa)",
+                "Tomahawk - Mixto 1 (c/ Toscana)",
+                "Tomahawk - Mixto 2 (c/ Calabresa y Toscana)",
+                "Cerveza Pilsen",
+                "Cerveza Cusqueña",
+                "Cerveza Skol",
+                "Gaseosa Inka Kola (1 Litro)",
+                "Gaseosa Coca Cola (1 Litro)",
+                "Gaseosa Inka Kola (1.5 Litros)",
+                "Gaseosa Coca Cola (1.5 Litros)",
+                "Gaseosa (2 Litros)",
+                "Refresco de Copoazú (1 Jarra)",
+                "Refresco de Copoazú (1/2 Jarra)",
+                "Refresco Chicha Morada / Carambola / Maracuyá (1 Jarra)",
+                "Refresco Chicha Morada / Carambola / Maracuyá (1/2 Jarra)"
+                "Porción de Papa",
+                "Porción de Arroz",
+                "Porción de Calabresa",
+                "Porción de Toscana",
             ])
         
         with col_cantidad:
@@ -999,12 +1037,55 @@ if btn_enviar:
     try:
         # Precios reales de los productos
         precios_mozo = {
-            "Pollo Canga": 25.00,
-            "Churrasco Brasilero": 25.00,
-            "Picanha": 40.00,
-            "Tomahawk": 70.00,
+            "Pollo Canga (Solo)": 25.00,
+            "Pollo Canga - Mixto 1 (c/ Calabresa)": 30.00,
+            "Pollo Canga - Mixto 1 (c/ Toscana)": 30.00,
+            "Pollo Canga - Mixto 2 (c/ Calabresa y Toscana)": 35.00,
+
+            "Churrasco Brasilero (Solo)": 25.00,
+            "Churrasco Brasilero - Mixto 1 (c/ Calabresa)": 30.00,
+            "Churrasco Brasilero - Mixto 1 (c/ Toscana)": 30.00,
+            "Churrasco Brasilero - Mixto 2 (c/ Calabresa y Toscana)": 35.00,
+
+            "Cuadril (Solo)": 30.00,
+            "Cuadril - Mixto 1 (c/ Calabresa)": 35.00,
+            "Cuadril - Mixto 1 (c/ Toscana)": 35.00,
+            "Cuadril - Mixto 2 (c/ Calabresa y Toscana)": 40.00,
+
+            "Picanha (Sola)": 40.00,
+            "Picanha - Mixto 1 (c/ Calabresa)": 45.00,
+            "Picanha - Mixto 1 (c/ Toscana)": 45.00,
+            "Picanha - Mixto 2 (c/ Calabresa y Toscana)": 50.00,
+
+            "Cadera (Sola)": 60.00,
+            "Cadera - Mixto 1 (c/ Calabresa)": 65.00,
+            "Cadera - Mixto 1 (c/ Toscana)": 65.00,
+            "Cadera - Mixto 2 (c/ Calabresa y Toscana)": 70.00,
+
+            "Tomahawk (Solo)": 70.00,
+            "Tomahawk - Mixto 1 (c/ Calabresa)": 75.00,
+            "Tomahawk - Mixto 1 (c/ Toscana)": 75.00,
+            "Tomahawk - Mixto 2 (c/ Calabresa y Toscana)": 80.00,
+
             "Cerveza Pilsen": 12.00,
-            "Refresco Copoazú": 20.00
+            "Cerveza Cusqueña": 10.00,
+            "Cerveza Skol": 6.00,
+
+            "Gaseosa Inka Kola (1 Litro)": 7.00,
+            "Gaseosa Coca Cola (1 Litro)": 7.00,
+            "Gaseosa Inka Kola (1.5 Litros)": 9.00,
+            "Gaseosa Coca Cola (1.5 Litros)": 9.00,
+            "Gaseosa (2 Litros)": 13.00,
+
+            "Refresco de Copoazú (1 Jarra)": 20.00,
+            "Refresco de Copoazú (1/2 Jarra)": 10.00,
+            "Refresco Chicha Morada / Carambola / Maracuyá (1 Jarra)": 15.00,
+            "Refresco Chicha Morada / Carambola / Maracuyá (1/2 Jarra)": 8.00,
+
+            "Porción de Papa": 5.00,
+            "Porción de Arroz": 4.00,
+            "Porción de Calabresa": 5.00,
+            "Porción de Toscana": 5.00
         }
 
         # Obtener precio del producto seleccionado
