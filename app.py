@@ -830,6 +830,7 @@ for venta in datos_supabase:
             ventas_hoy.append({
                 "FECHA": fecha_peru.strftime("%d/%m/%Y"),
                 "HORA": fecha_peru.strftime("%H:%M:%S"),
+                "MESA": venta.get("mesa", ""),
                 "PRODUCTO": venta.get("producto", ""),
                 "MONTO (S/)": venta.get("total", venta.get("monto", 0)),
                 "MÉTODO DE PAGO": venta.get("metodo", "")
